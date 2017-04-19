@@ -11,11 +11,11 @@ Besides, there is an additional "group.txt" file in Cora.
 
 * group.txt: Each vertex in Cora has been annotated with a label. This file can be used for vertex classification.
 
-##Run
+## Run
     Run the following command for training CANE:
 		python train.py
 
-##Dependencies
+## Dependencies
 	*	Tensorflow == 0.12
 	*	Scipy == 0.18.1
 	*	Numpy == 1.11.2
