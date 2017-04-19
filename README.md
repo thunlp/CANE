@@ -16,9 +16,9 @@ Besides, there is an additional "group.txt" file in Cora.
 		python train.py
 
 ## Dependencies
-	*	Tensorflow == 0.12
-	*	Scipy == 0.18.1
-	*	Numpy == 1.11.2
+	* Tensorflow == 0.12
+	* Scipy == 0.18.1
+	* Numpy == 1.11.2
 
 ## Cite
   If you use the code, please cite this paper:
