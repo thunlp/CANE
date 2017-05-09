@@ -12,15 +12,16 @@ Besides, there is an additional "group.txt" file in Cora.
 * group.txt: Each vertex in Cora has been annotated with a label. This file can be used for vertex classification.
 
 ## Run
-    Run the following command for training CANE:
-		python train.py
+Run the following command for training CANE:
+
+    python train.py
 
 ## Dependencies
-	* Tensorflow == 0.12
-	* Scipy == 0.18.1
-	* Numpy == 1.11.2
+* Tensorflow == 0.12
+* Scipy == 0.18.1
+* Numpy == 1.11.2
 
 ## Cite
-  If you use the code, please cite this paper:
+If you use the code, please cite this paper:
   
-  Cunchao Tu, Han Liu, Zhiyuan Liu, Maosong Sun. CANE: Context-Aware Network  Embedding for Relation Modeling. The 55th Annual Meeting of the Association for Computational Linguistics (ACL 2017).
+_Cunchao Tu, Han Liu, Zhiyuan Liu, Maosong Sun. CANE: Context-Aware Network  Embedding for Relation Modeling. The 55th Annual Meeting of the Association for Computational Linguistics (ACL 2017)._
