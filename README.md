@@ -25,3 +25,5 @@ Run the following command for training CANE:
 If you use the code, please cite this paper:
   
 _Cunchao Tu, Han Liu, Zhiyuan Liu, Maosong Sun. CANE: Context-Aware Network  Embedding for Relation Modeling. The 55th Annual Meeting of the Association for Computational Linguistics (ACL 2017)._
+
+For more related works on network representation learning, please refer to my [homepage](http://thunlp.org/~tcc/).
