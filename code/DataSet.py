@@ -1,6 +1,5 @@
 import sys
 
-reload(sys)
 import config
 
 sys.setdefaultencoding("utf-8")
