@@ -21,7 +21,7 @@ class dataSet:
 
     def load(self, text_path, graph_path):
         text_file = open(text_path, 'rb').readlines()
-        for a in range(0,len(text_file)):
+        for a in range(0, len(text_file)):
             text_file[a] = str(text_file[a])
         graph_file = open(graph_path, 'rb').readlines()
 
@@ -31,6 +31,8 @@ class dataSet:
         edges = []
         for i in graph_file:
             edges.append(list(map(int, i.strip().decode().split('\t'))))
+
+        print("Total load %d edges." % len(edges))
 
         return edges
 

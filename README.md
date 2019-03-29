@@ -14,11 +14,11 @@ Besides, there is an additional "group.txt" file in Cora.
 ## Run
 Run the following command for training CANE:
 
-    python3 run.py --dataset [cora,HepTh,zhihu] --gpu gpu_id --ratio [0.15,0.25,...]
+    python3 run.py --dataset [cora,HepTh,zhihu] --gpu gpu_id --ratio [0.15,0.25,...] --rho rho_value
     
 For example, you can train like:
 
-    python3 run.py --dataset zhihu --gpu 0 --ratio 0.55
+    python3 run.py --dataset zhihu --gpu 0 --ratio 0.55 --rho 1.0,0.3,0.3
 
 
 ## Dependencies
