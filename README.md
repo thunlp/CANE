@@ -14,12 +14,12 @@ Besides, there is an additional "group.txt" file in Cora.
 ## Run
 Run the following command for training CANE:
 
-    python train.py
+    python3 run.py --dataset [cora,HepTh,zhihu] --gpu gpu_id --ratio [0.15,0.25,...]
 
 ## Dependencies
-* Tensorflow == 0.12
-* Scipy == 0.18.1
-* Numpy == 1.11.2
+* Tensorflow == 1.11.0
+* Scipy == 1.1.0
+* Numpy == 1.16.2
 
 ## Cite
 If you use the code, please cite this paper:
