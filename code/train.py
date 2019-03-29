@@ -9,6 +9,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', '-d')
+parser.add_argument('--rho', '-r')
 args = parser.parse_args()
 
 # load data
@@ -23,7 +24,7 @@ data = dataSet(text_path, graph_path)
 with tf.Graph().as_default():
     sess = tf.Session()
     with sess.as_default():
-        model = cane.Model(data.num_vocab, data.num_nodes)
+        model = cane.Model(data.num_vocab, data.num_nodes, args.rho)
         opt = tf.train.AdamOptimizer(config.lr)
         train_op = opt.minimize(model.loss)
         sess.run(tf.global_variables_initializer())

@@ -4,7 +4,11 @@ import config
 
 
 class Model:
-    def __init__(self, vocab_size, num_nodes):
+    def __init__(self, vocab_size, num_nodes, rho):
+        rho = rho.split(",")
+        self.rho1 = float(rho[0])
+        self.rho2 = float(rho[1])
+        self.rho3 = float(rho[2])
         # '''hyperparameter'''
         with tf.name_scope('read_inputs') as scope:
             self.Text_a = tf.placeholder(tf.int32, [config.batch_size, config.MAX_LEN], name='Ta')
@@ -113,9 +117,9 @@ class Model:
         p8 = tf.reduce_sum(tf.multiply(self.N_B, self.convNeg), 1)
         p8 = tf.log(tf.sigmoid(-p8) + 0.001)
 
-        rho1 = 0.7
-        rho2 = 1.0
-        rho3 = 0.1
+        rho1 = self.rho1
+        rho2 = self.rho2
+        rho3 = self.rho3
         temp_loss = rho1 * (p1 + p2) + rho2 * (p3 + p4) + rho3 * (p5 + p6) + rho3 * (p7 + p8)
         loss = -tf.reduce_sum(temp_loss)
         return loss
