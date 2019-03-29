@@ -1,11 +1,18 @@
 import random
+import argparse
 
-f = open('../datasets/zhihu/graph.txt', 'rb')
+parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', '-d')
+parser.add_argument('--gpu', '-g')
+parser.add_argument('--ratio', '-r')
+args = parser.parse_args()
+
+f = open('../datasets/%s/graph.txt' % args.dataset, 'rb')
 edges = [i for i in f]
-selected = random.sample(edges, int(len(edges) * 0.45))
+selected = random.sample(edges, int(len(edges) * float(args.ratio)))
 remain = [i for i in edges if i not in selected]
-fw1 = open('graph.txt', 'wb')
-fw2 = open('test_graph.txt', 'wb')
+fw1 = open('temp/graph.txt', 'wb')
+fw2 = open('temp/test_graph.txt', 'wb')
 
 for i in selected:
     fw1.write(i)

@@ -1,4 +1,5 @@
 from math import pow
+import config
 from config import neg_table_size
 
 
@@ -6,7 +7,7 @@ def InitNegTable(edges):
     a_list, b_list = zip(*edges)
     a_list = list(a_list)
     b_list = list(b_list)
-    NEG_SAMPLE_POWER = 0.75
+    NEG_SAMPLE_POWER = config.NEG_SAMPLE_POWER
     node = a_list
     node.extend(b_list)
 
@@ -27,7 +28,7 @@ def InitNegTable(edges):
     degree_list = list(node_degree.values())
     node_id = list(node_degree.keys())
     for i in range(neg_table_size):
-        if (((i + 1) / float(neg_table_size)) > por):
+        if ((i + 1) / float(neg_table_size)) > por:
             cur_sum += pow(degree_list[vid + 1], NEG_SAMPLE_POWER)
             por = cur_sum / sum_degree
             vid += 1

@@ -5,11 +5,16 @@ import config
 import cane
 import random
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', '-d')
+args = parser.parse_args()
 
 # load data
-dataset_name = "zhihu"
-graph_path = os.path.join('graph.txt')
-text_path = os.path.join("..","datasets",dataset_name,'data.txt')
+dataset_name = args.dataset
+graph_path = os.path.join('temp/graph.txt')
+text_path = os.path.join("..", "datasets", dataset_name, 'data.txt')
 
 data = dataSet(text_path, graph_path)
 
@@ -53,7 +58,7 @@ with tf.Graph().as_default():
                 loss_epoch += loss_batch
             print('epoch: ', epoch + 1, ' loss: ', loss_epoch)
 
-        file = open('embed.txt', 'wb')
+        file = open('temp/embed.txt', 'wb')
         batches = data.generate_batches(mode='add')
         num_batch = len(batches)
         embed = [[] for _ in range(data.num_nodes)]
