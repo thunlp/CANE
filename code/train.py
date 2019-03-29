@@ -4,10 +4,12 @@ from DataSet import dataSet
 import config
 import cane
 import random
+import os
 
 # load data
-graph_path = 'graph.txt'
-text_path = 'data.txt'
+dataset_name = "zhihu"
+graph_path = os.path.join('graph.txt')
+text_path = os.path.join("..","datasets",dataset_name,'data.txt')
 
 data = dataSet(text_path, graph_path)
 
@@ -74,14 +76,14 @@ with tf.Graph().as_default():
             # run the graph
             convA, convB, TA, TB = sess.run([model.convA, model.convB, model.N_A, model.N_B], feed_dict=feed_dict)
             for i in range(config.batch_size):
-                em = list(convA[i]) + list(TA[i])
+                em = list(TA[i])
                 embed[node1[i]].append(em)
-                em = list(convB[i]) + list(TB[i])
+                em = list(TB[i])
                 embed[node2[i]].append(em)
         for i in range(data.num_nodes):
             if embed[i]:
                 # print embed[i]
                 tmp = np.sum(embed[i], axis=0) / len(embed[i])
-                file.write(' '.join(map(str, tmp)) + '\n')
+                file.write((' '.join(map(str, tmp)) + '\n').encode())
             else:
-                file.write('\n')
+                file.write('\n'.encode())

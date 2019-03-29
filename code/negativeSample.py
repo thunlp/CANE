@@ -24,8 +24,8 @@ def InitNegTable(edges):
     cur_sum = 0
     vid = -1
     neg_table = []
-    degree_list = node_degree.values()
-    node_id = node_degree.keys()
+    degree_list = list(node_degree.values())
+    node_id = list(node_degree.keys())
     for i in range(neg_table_size):
         if (((i + 1) / float(neg_table_size)) > por):
             cur_sum += pow(degree_list[vid + 1], NEG_SAMPLE_POWER)

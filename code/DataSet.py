@@ -2,7 +2,6 @@ import sys
 
 import config
 
-sys.setdefaultencoding("utf-8")
 import numpy as np
 from tensorflow.contrib import learn
 from negativeSample import InitNegTable
@@ -22,6 +21,8 @@ class dataSet:
 
     def load(self, text_path, graph_path):
         text_file = open(text_path, 'rb').readlines()
+        for a in range(0,len(text_file)):
+            text_file[a] = str(text_file[a])
         graph_file = open(graph_path, 'rb').readlines()
 
         return text_file, graph_file
@@ -29,7 +30,7 @@ class dataSet:
     def load_edges(self, graph_file):
         edges = []
         for i in graph_file:
-            edges.append(map(int, i.strip().split('\t')))
+            edges.append(list(map(int, i.strip().decode().split('\t'))))
 
         return edges
 
@@ -55,7 +56,7 @@ class dataSet:
 
     def generate_batches(self, mode=None):
 
-        num_batch = len(self.edges) / config.batch_size
+        num_batch = len(self.edges) // config.batch_size
         edges = self.edges
         if mode == 'add':
             num_batch += 1

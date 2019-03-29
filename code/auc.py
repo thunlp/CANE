@@ -1,13 +1,15 @@
 import random
 import numpy as np
+import os
 
 node2vec = {}
+dataset_name = "zhihu"
 f = open('embed.txt', 'rb')
 for i, j in enumerate(f):
     if j != '\n':
-        node2vec[i] = map(float, j.strip().split(' '))
-f1 = open('test_graph.txt', 'rb')
-edges = [map(int, i.strip().split('\t')) for i in f1]
+        node2vec[i] = list(map(float, j.strip().decode().split(' ')))
+f1 = open(os.path.join('test_graph.txt'), 'rb')
+edges = [list(map(int, i.strip().decode().split('\t'))) for i in f1]
 nodes = list(set([i for j in edges for i in j]))
 a = 0
 b = 0

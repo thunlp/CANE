@@ -1,8 +1,8 @@
 import random
 
-f = open('graph.txt', 'rb')
+f = open('../datasets/zhihu/graph.txt', 'rb')
 edges = [i for i in f]
-selected = random.sample(edges, int(len(edges) * 0.15))
+selected = random.sample(edges, int(len(edges) * 0.95))
 remain = [i for i in edges if i not in selected]
 fw1 = open('graph.txt', 'wb')
 fw2 = open('test_graph.txt', 'wb')

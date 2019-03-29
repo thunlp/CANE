@@ -15,8 +15,8 @@ class Model:
             self.Node_neg = tf.placeholder(tf.int32, [config.batch_size], name='n3')
 
         with tf.name_scope('initialize_embedding') as scope:
-            self.text_embed = tf.Variable(tf.truncated_normal([vocab_size, config.embed_size / 2], stddev=0.3))
-            self.node_embed = tf.Variable(tf.truncated_normal([num_nodes, config.embed_size / 2], stddev=0.3))
+            self.text_embed = tf.Variable(tf.truncated_normal([vocab_size, config.embed_size // 2], stddev=0.3))
+            self.node_embed = tf.Variable(tf.truncated_normal([num_nodes, config.embed_size // 2], stddev=0.3))
             self.node_embed = tf.clip_by_norm(self.node_embed, clip_norm=1, axes=1)
 
         with tf.name_scope('lookup_embeddings') as scope:
@@ -36,7 +36,7 @@ class Model:
         self.loss = self.compute_loss()
 
     def conv(self):
-        W2 = tf.Variable(tf.truncated_normal([2, config.embed_size / 2, 1, 100], stddev=0.3))
+        W2 = tf.Variable(tf.truncated_normal([2, config.embed_size // 2, 1, 100], stddev=0.3))
         rand_matrix = tf.Variable(tf.truncated_normal([100, 100], stddev=0.3))
 
         convA = tf.nn.conv2d(self.T_A, W2, strides=[1, 1, 1, 1], padding='VALID')
@@ -47,13 +47,13 @@ class Model:
         hB = tf.tanh(tf.squeeze(convB))
         hNEG = tf.tanh(tf.squeeze(convNEG))
 
-        tmphA = tf.reshape(hA, [config.batch_size * (config.MAX_LEN - 1), config.embed_size / 2])
+        tmphA = tf.reshape(hA, [config.batch_size * (config.MAX_LEN - 1), config.embed_size // 2])
         ha_mul_rand = tf.reshape(tf.matmul(tmphA, rand_matrix),
-                                 [config.batch_size, config.MAX_LEN - 1, config.embed_size / 2])
-        r1 = tf.batch_matmul(ha_mul_rand, hB, adj_y=True)
-        r3 = tf.batch_matmul(ha_mul_rand, hNEG, adj_y=True)
-        att1 = tf.expand_dims(tf.pack(r1), -1)
-        att3 = tf.expand_dims(tf.pack(r3), -1)
+                                 [config.batch_size, config.MAX_LEN - 1, config.embed_size // 2])
+        r1 = tf.matmul(ha_mul_rand, hB, adjoint_b=True)
+        r3 = tf.matmul(ha_mul_rand, hNEG, adjoint_b=True)
+        att1 = tf.expand_dims(tf.stack(r1), -1)
+        att3 = tf.expand_dims(tf.stack(r3), -1)
 
         att1 = tf.tanh(att1)
         att3 = tf.tanh(att3)
@@ -78,9 +78,9 @@ class Model:
         hB = tf.transpose(hB, perm=[0, 2, 1])
         hNEG = tf.transpose(hNEG, perm=[0, 2, 1])
 
-        rep1 = tf.batch_matmul(hA, rep_A)
-        rep2 = tf.batch_matmul(hB, rep_B)
-        rep3 = tf.batch_matmul(hNEG, rep_NEG)
+        rep1 = tf.matmul(hA, rep_A)
+        rep2 = tf.matmul(hB, rep_B)
+        rep3 = tf.matmul(hNEG, rep_NEG)
 
         attA = tf.squeeze(rep1)
         attB = tf.squeeze(rep2)
@@ -89,28 +89,28 @@ class Model:
         return attA, attB, attNEG
 
     def compute_loss(self):
-        p1 = tf.reduce_sum(tf.mul(self.convA, self.convB), 1)
+        p1 = tf.reduce_sum(tf.multiply(self.convA, self.convB), 1)
         p1 = tf.log(tf.sigmoid(p1) + 0.001)
 
-        p2 = tf.reduce_sum(tf.mul(self.convA, self.convNeg), 1)
+        p2 = tf.reduce_sum(tf.multiply(self.convA, self.convNeg), 1)
         p2 = tf.log(tf.sigmoid(-p2) + 0.001)
 
-        p3 = tf.reduce_sum(tf.mul(self.N_A, self.N_B), 1)
+        p3 = tf.reduce_sum(tf.multiply(self.N_A, self.N_B), 1)
         p3 = tf.log(tf.sigmoid(p3) + 0.001)
 
-        p4 = tf.reduce_sum(tf.mul(self.N_A, self.N_NEG), 1)
+        p4 = tf.reduce_sum(tf.multiply(self.N_A, self.N_NEG), 1)
         p4 = tf.log(tf.sigmoid(-p4) + 0.001)
 
-        p5 = tf.reduce_sum(tf.mul(self.convB, self.N_A), 1)
+        p5 = tf.reduce_sum(tf.multiply(self.convB, self.N_A), 1)
         p5 = tf.log(tf.sigmoid(p5) + 0.001)
 
-        p6 = tf.reduce_sum(tf.mul(self.convNeg, self.N_A), 1)
+        p6 = tf.reduce_sum(tf.multiply(self.convNeg, self.N_A), 1)
         p6 = tf.log(tf.sigmoid(-p6) + 0.001)
 
-        p7 = tf.reduce_sum(tf.mul(self.N_B, self.convA), 1)
+        p7 = tf.reduce_sum(tf.multiply(self.N_B, self.convA), 1)
         p7 = tf.log(tf.sigmoid(p7) + 0.001)
 
-        p8 = tf.reduce_sum(tf.mul(self.N_B, self.convNeg), 1)
+        p8 = tf.reduce_sum(tf.multiply(self.N_B, self.convNeg), 1)
         p8 = tf.log(tf.sigmoid(-p8) + 0.001)
 
         rho1 = 0.7
