@@ -60,9 +60,9 @@ class dataSet:
 
         num_batch = len(self.edges) // config.batch_size
         edges = self.edges
-        if mode == 'add':
-            num_batch += 1
-            edges.extend(edges[:(config.batch_size - len(self.edges) // config.batch_size)])
+        # if mode == 'add':
+        #     num_batch += 1
+        #     edges.extend(edges[:(config.batch_size - len(self.edges) // config.batch_size)])
         if mode != 'add':
             random.shuffle(edges)
         sample_edges = edges[:num_batch * config.batch_size]
