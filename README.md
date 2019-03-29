@@ -15,6 +15,11 @@ Besides, there is an additional "group.txt" file in Cora.
 Run the following command for training CANE:
 
     python3 run.py --dataset [cora,HepTh,zhihu] --gpu gpu_id --ratio [0.15,0.25,...]
+    
+For example, you can train like:
+
+    python3 run.py --dataset zhihu --gpu 0 --ratio 0.55
+
 
 ## Dependencies
 * Tensorflow == 1.11.0
