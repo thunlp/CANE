@@ -6,7 +6,7 @@ node2vec = {}
 dataset_name = "zhihu"
 f = open('embed.txt', 'rb')
 for i, j in enumerate(f):
-    if j != '\n':
+    if j.decode() != '\n':
         node2vec[i] = list(map(float, j.strip().decode().split(' ')))
 f1 = open(os.path.join('test_graph.txt'), 'rb')
 edges = [list(map(int, i.strip().decode().split('\t'))) for i in f1]
