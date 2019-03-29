@@ -1,5 +1,6 @@
 import random
 import argparse
+import config
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', '-d')
@@ -10,6 +11,7 @@ args = parser.parse_args()
 f = open('../datasets/%s/graph.txt' % args.dataset, 'rb')
 edges = [i for i in f]
 selected = random.sample(edges, int(len(edges) * float(args.ratio)))
+selected = selected - selected % config.batch_size
 remain = [i for i in edges if i not in selected]
 fw1 = open('temp/graph.txt', 'wb')
 fw2 = open('temp/test_graph.txt', 'wb')
